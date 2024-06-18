@@ -1,20 +1,31 @@
-export default function Friend({ friend }) {
+export default function Friend({ teman, onSelected, selectedFriend }) {
+  const isSelect = selectedFriend?.id === teman.id;
   return (
-    <li>
-      <img src={friend.image} alt={friend.name} />
-      <h1>{friend.name}</h1>
-      {friend.balance < 0 && (
+    <li className={isSelect ? "selected" : ""}>
+      <img src={teman.image} alt={teman.name} />
+      <h1>{teman.name}</h1>
+      {teman.balance < 0 && (
         <p className="red">
-          Kamu berhutang Rp {Math.abs(friend.balance)} ke {friend.name}
+          Kamu berhutang Rp {Math.abs(teman.balance)} ke {teman.name}
         </p>
       )}
-      {friend.balance > 0 && (
+      {teman.balance > 0 && (
         <p className="green">
-          {friend.name} berhutang Rp {Math.abs(friend.balance)} ke kamu
+          {teman.name} berhutang Rp {Math.abs(teman.balance)} ke kamu
         </p>
       )}
-      {friend.balance === 0 && <p>kamu dan {friend.name} tidak ada hutang</p>}
-      <button className="button">Pilih</button>
+      {teman.balance === 0 && <p>kamu dan {teman.name} tidak ada hutang</p>}
+      <button className="button" onClick={() => onSelected(teman)}>
+        {/* Penjelasan isSelect
+        
+        Kode ini berfungsi ketika ID dari selectedFriend dan teman itu sama,
+        yang akan menghasilkan output true, lalu kenapa ketika kita klik Tutup
+        form akan tertutup? bukankah akan menghasilkan true terus?
+        karena pada event handler handleShowSelectedFriend pada App.jsx
+        Ketika selectedFriend?.id === teman.id menjadi true, akan diubah ke Null atau kosong*/}
+        {isSelect ? "Tutup" : "Pilih"}
+        {/* End*/}
+      </button>
     </li>
   );
 }
