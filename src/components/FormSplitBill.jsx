@@ -1,14 +1,22 @@
 import { useState } from "react";
 
 export default function FormSplitBill({ selectedFriend, onSplitBill }) {
-  const [amount, setAmount] = useState("");
-  const [myBill, setMyBill] = useState("");
-  const friendBill = amount ? amount - myBill : "";
-  const [whoIsPaying, setWhoIsPaying] = useState("user");
+  const [amount, setAmount] = useState(""); // State untuk menyimpan total tagihan
+  const [myBill, setMyBill] = useState(""); // State untuk menyimpan tagihan saya
+  const friendBill = amount ? amount - myBill : ""; // Hitung tagihan teman jika total tagihan diisi
+  const [whoIsPaying, setWhoIsPaying] = useState("user"); // State untuk menentukan siapa yang membayar
 
   function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault(); // Mencegah form submit default
+
+    // Validasi: Jika amount atau myBill kosong, hentikan eksekusi
+    //Jika salah satu true maka blok kode return akan dijalankan
+    //!amount dan !myBill akan menghasilkan true, karena nilainya kosong.
     if (!amount || !myBill) return;
+
+    // Panggil onSplitBill dengan nilai yang sesuai
+    // Jika user yang membayar, friendBill ditambahkan ke saldo teman
+    // Jika teman yang membayar, myBill dikurangi dari saldo teman
     onSplitBill(whoIsPaying === "user" ? friendBill : -myBill);
   }
 

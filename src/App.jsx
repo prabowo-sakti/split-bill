@@ -48,18 +48,20 @@ export default function App() {
   }
 
   function handleSplitBill(value) {
+    // Update state addFriend dengan nilai baru
     setAddFriend(
       addFriend.map((friend) => {
+        // Jika id teman sesuai dengan id teman yang dipilih, perbarui saldo
         if (friend.id === selectedFriend?.id) {
           return {
             ...friend,
-            balance: friend.balance + value,
+            balance: friend.balance + value, // Tambahkan atau kurangi saldo teman
           };
         }
-        return value;
+        return friend; // Kembalikan teman lain tanpa perubahan
       })
     );
-    setSelectedFriend(null);
+    setSelectedFriend(null); // Setel selectedFriend menjadi null setelah pembagian tagihan
   }
 
   // Dan newFriend yang diteruskan sebagai argumen onAddFriend pada FormAddFriend adalah friend pada event handler ini
